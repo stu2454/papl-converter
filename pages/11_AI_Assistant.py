@@ -5,6 +5,7 @@ Conversational AI assistant powered by RAG
 
 import streamlit as st
 import sys
+import os
 from pathlib import Path
 
 # Add lib directory to path
@@ -23,6 +24,23 @@ NDIA_ACCENT = "#00B5E2"
 
 st.title("🤖 AI PAPL Assistant")
 st.markdown("### Ask questions in plain English - Get AI-powered answers")
+
+# TEMPORARY DEBUG - Add to sidebar
+with st.sidebar:
+    with st.expander("🐛 Debug: AWS Environment", expanded=True):
+        st.write("**AWS_REGION:**", os.getenv('AWS_REGION', '❌ NOT SET'))
+        access_key = os.getenv('AWS_ACCESS_KEY_ID', '')
+        if access_key:
+            st.write("**AWS_ACCESS_KEY_ID:**", access_key[:10] + "..." + access_key[-4:])
+        else:
+            st.write("**AWS_ACCESS_KEY_ID:**", '❌ NOT SET')
+        secret_key = os.getenv('AWS_SECRET_ACCESS_KEY', '')
+        if secret_key:
+            st.write("**AWS_SECRET_ACCESS_KEY:**", f'✅ SET ({len(secret_key)} chars)')
+        else:
+            st.write("**AWS_SECRET_ACCESS_KEY:**", '❌ NOT SET')
+        st.write("**BEDROCK_EMBEDDING_MODEL:**", os.getenv('BEDROCK_EMBEDDING_MODEL', '❌ NOT SET'))
+        st.write("**BEDROCK_LLM_MODEL:**", os.getenv('BEDROCK_LLM_MODEL', '❌ NOT SET'))
 
 # Check if data is available
 if not st.session_state.get('json_output'):
