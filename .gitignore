@@ -1,0 +1,78 @@
+# CRITICAL: Environment files with secrets
+.env
+.env.local
+.env.production
+*.env
+
+# AWS Credentials (should never be in repo)
+.aws/
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# Streamlit
+.streamlit/secrets.toml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Outputs (user-generated data - may contain PII)
+outputs/*.json
+outputs/*.yaml
+outputs/*.md
+outputs/*.xlsx
+outputs/*.docx
+outputs/*.pdf
+
+# Test data (may contain real participant info)
+test_data/
+sample_data/
+uploads/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Keep example files
+!.env.example
+!outputs/.gitkeep
