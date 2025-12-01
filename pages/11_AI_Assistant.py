@@ -25,23 +25,6 @@ NDIA_ACCENT = "#00B5E2"
 st.title("🤖 AI PAPL Assistant")
 st.markdown("### Ask questions in plain English - Get AI-powered answers")
 
-# TEMPORARY DEBUG - Add to sidebar
-with st.sidebar:
-    with st.expander("🐛 Debug: AWS Environment", expanded=True):
-        st.write("**AWS_REGION:**", os.getenv('AWS_REGION', '❌ NOT SET'))
-        access_key = os.getenv('AWS_ACCESS_KEY_ID', '')
-        if access_key:
-            st.write("**AWS_ACCESS_KEY_ID:**", access_key[:10] + "..." + access_key[-4:])
-        else:
-            st.write("**AWS_ACCESS_KEY_ID:**", '❌ NOT SET')
-        secret_key = os.getenv('AWS_SECRET_ACCESS_KEY', '')
-        if secret_key:
-            st.write("**AWS_SECRET_ACCESS_KEY:**", f'✅ SET ({len(secret_key)} chars)')
-        else:
-            st.write("**AWS_SECRET_ACCESS_KEY:**", '❌ NOT SET')
-        st.write("**BEDROCK_EMBEDDING_MODEL:**", os.getenv('BEDROCK_EMBEDDING_MODEL', '❌ NOT SET'))
-        st.write("**BEDROCK_LLM_MODEL:**", os.getenv('BEDROCK_LLM_MODEL', '❌ NOT SET'))
-
 # Check if data is available
 if not st.session_state.get('json_output'):
     st.warning("⚠️ Please convert your PAPL data first in 'Run Conversion' page")
@@ -217,16 +200,28 @@ st.markdown("## ⚙️ Current Configuration")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.metric("AWS Region", st.session_state.get('aws_region', 'Not configured'))
+    # Get region from assistant if available, otherwise from environment
+    if st.session_state.get('papl_assistant'):
+        region = st.session_state.papl_assistant.aws_region
+    else:
+        region = os.getenv('AWS_REGION', st.session_state.get('aws_region', 'Not configured'))
+    st.metric("AWS Region", region)
 
 with col2:
-    model_name = st.session_state.get('llm_model', 'Not configured')
+    # Get model from assistant if available, otherwise from session state or env
+    if st.session_state.get('papl_assistant'):
+        model_name = st.session_state.papl_assistant.llm_model
+    else:
+        model_name = st.session_state.get('llm_model', os.getenv('BEDROCK_LLM_MODEL', 'Not configured'))
+    
     if 'sonnet' in model_name.lower():
         model_display = "Claude 3 Sonnet"
     elif 'haiku' in model_name.lower():
         model_display = "Claude 3 Haiku"
-    else:
+    elif 'instant' in model_name.lower():
         model_display = "Claude Instant"
+    else:
+        model_display = model_name.split('/')[-1] if '/' in model_name else model_name
     st.metric("Model", model_display)
 
 with col3:

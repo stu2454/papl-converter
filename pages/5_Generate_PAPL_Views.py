@@ -164,7 +164,7 @@ elif view_type == "Old Framework Planning View":
     """)
     
     if st.button("🎨 Generate Old Framework View", type="primary", use_container_width=True):
-        st.info("Navigate to **'9_Framework_Views'** to compare Old vs New!")
+        st.info("Navigate to **'9_Framework_Comparison'** to compare Old vs New!")
 
 elif view_type == "New Framework Planning View":
     st.markdown("### 🆕 New Framework Planning View")
@@ -186,7 +186,7 @@ elif view_type == "New Framework Planning View":
     """)
     
     if st.button("🎨 Generate New Framework View", type="primary", use_container_width=True):
-        st.info("Navigate to **'9_Framework_Views'** to compare Old vs New!")
+        st.info("Navigate to **'9_Framework_Comparison'** to compare Old vs New!")
 
 elif view_type == "Accessible Web Page (WCAG 2.1 AA)":
     st.markdown("### ♿ Accessible Web Page")
@@ -214,7 +214,7 @@ elif view_type == "Accessible Web Page (WCAG 2.1 AA)":
     """)
     
     if st.button("🎨 Generate Accessible Page", type="primary", use_container_width=True):
-        st.info("Navigate to **'10_Accessible_View'** to see WCAG compliant page!")
+        st.info("Navigate to **'12_Accessible_View'** to see WCAG compliant page!")
 
 elif view_type == "Traditional PDF Document":
     st.markdown("### 📄 Traditional PDF Document")
